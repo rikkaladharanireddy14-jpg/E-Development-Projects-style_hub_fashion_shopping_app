@@ -102,6 +102,7 @@ The source demonstrates how Flutter widgets can compose responsive shopping scre
 | The first 50 default DummyJSON products did not contain the selected fashion categories. | Queried the documented per-category endpoints and changed the repository to request those categories directly. | Eight fashion endpoints returned data in the direct API check. |
 | Flutter/Dart commands did not produce output; direct formatter invocation failed inside DartDev. | Tried the Flutter and Dart launchers and recorded the error. Avoided modifying the SDK installation. | Analysis, tests, formatting, builds and app screenshots remain unverified. |
 | DOCX rendering requires LibreOffice, which is not available in the configured runtime paths. | Kept report content as editable Markdown using the college template's section structure. | DOCX generation and visual template QA remain pending. |
+| The Git HTTPS credential helper failed to start when publishing to the supplied repository. | Tried the configured and bundled Git runtimes; no password or token was requested or stored. | The three commits remain local; an authenticated GitHub connection or working credential helper is needed to push. |
 
 ## 13. Conclusion and Future Scope
 
