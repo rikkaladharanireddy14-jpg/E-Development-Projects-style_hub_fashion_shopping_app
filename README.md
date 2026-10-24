@@ -1,101 +1,227 @@
-# Style Hub
+# Style Hub — Fashion Shopping Application
 
-A responsive Flutter fashion-shopping application for the CS506PC UI Design lab. Style Hub brings product discovery, search and category filters, product details, wishlist, cart, and a simulated checkout into one small application. The catalog reads fashion categories from DummyJSON and falls back to a visibly labelled local demonstration catalog when the API is unavailable.
+Style Hub is a responsive fashion-shopping application developed using Flutter and Dart for the CS506PC UI Design lab. It combines product discovery, search, category filtering, product details, wishlist management, shopping-cart calculations, checkout validation, and simulated order confirmation in one application.
 
-## Scope
+The application retrieves sample fashion products from the DummyJSON API and provides a local demonstration catalog when the remote catalog cannot be loaded.
 
-Included: fashion product browsing, search, category filters, product details, shared cart and wishlist state, quantity and total calculations, checkout validation, simulated order confirmation, responsive grid breakpoints, light/dark themes, image fallbacks, and explainable price-based Style Picks.
+## 1. Project Objectives
 
-Excluded: real payments, accounts, order fulfilment, stock claims, ratings or discount claims, and backend persistence. Style Picks use a simple lowest-listed-price sort; they are not AI recommendations. Local fallback items are marked as demo products in the data model and are clearly labelled in the interface.
+- Build a responsive shopping interface using Flutter widgets.
+- Demonstrate Dart fundamentals and reusable UI components.
+- Implement navigation between shopping screens.
+- Manage shared cart and wishlist state.
+- Demonstrate form validation and error handling.
+- Retrieve and parse product information from a REST API.
+- Implement animations, themes, and responsive layouts.
+- Verify application logic through automated tests.
 
-## Technology
+## 2. Features
 
-- Flutter and Dart
-- Provider / ChangeNotifier for shared cart and wishlist state
-- `http` for REST calls
-- DummyJSON product category endpoints for sample product data
+- Fashion product browsing and category filtering.
+- Product search and product-detail screens.
+- Wishlist add/remove functionality.
+- Shopping cart with quantity controls and automatic total calculations.
+- Checkout form with field validation.
+- Simulated order confirmation without real payment processing.
+- Responsive product grid and detail layouts.
+- Light and dark themes.
+- Loading, error, empty-state, and image-fallback handling.
+- Remote product catalog with local demonstration fallback.
+- Explainable, price-based Style Picks.
 
-The live catalog requests `https://dummyjson.com/products/category/{category}` for `tops`, `mens-shirts`, `mens-shoes`, `womens-dresses`, `womens-shoes`, `womens-bags`, `womens-jewellery`, and `sunglasses`. On 24 October 2026, each endpoint returned HTTP success and between 3 and 5 products. The response included `id`, `title`, `description`, `category`, `price`, `thumbnail`, and `images` fields. The app combines and de-duplicates these category results. The API returns a numeric `price` but no currency field, so the interface displays neutral amounts and states that the currency is unspecified. DummyJSON describes itself as sample / placeholder data, so the products are for demonstration only.
+**Important:** Style Picks use a simple lowest-listed-price sorting rule. They are not AI-generated recommendations. Product data is provided for demonstration and does not represent guaranteed stock, discounts, ratings, or real-world availability.
 
-## Setup
+## 3. Technology Stack
 
-Requires a Flutter SDK and network access for dependency resolution. From this folder:
+- **Language:** Dart
+- **Framework:** Flutter
+- **State management:** Provider and ChangeNotifier
+- **Networking:** `http`
+- **Product data:** DummyJSON REST API
+- **Testing:** Flutter test framework
 
-```powershell
-flutter create --project-name style_hub --platforms android,ios,web .
+## 4. REST API Integration
+
+The application requests fashion products from these DummyJSON category endpoints:
+
+- `tops`
+- `mens-shirts`
+- `mens-shoes`
+- `womens-dresses`
+- `womens-shoes`
+- `womens-bags`
+- `womens-jewellery`
+- `sunglasses`
+
+The general endpoint format is:
+
+`https://dummyjson.com/products/category/{category}`
+
+The repository parses JSON responses into product models and combines products from the requested categories while removing duplicate IDs. Individual category failures are handled so successful category responses can still provide products. If no products can be loaded, the application can use its local demonstration catalog.
+
+The API supplies numeric prices without a currency field, so the interface uses neutral amounts rather than assuming a particular currency.
+
+Reference: [DummyJSON Products API](https://dummyjson.com/docs/products).
+
+## 5. Installation and Setup
+
+### Prerequisites
+
+- Flutter SDK
+- Dart SDK, normally included with Flutter
+- Internet access for dependency resolution and remote product data
+- Chrome or a configured mobile emulator/device
+
+### Run the application
+
+Open a terminal in the project directory and run:
+
+```bash
 flutter pub get
 flutter run -d chrome
 ```
 
-Without API access, the app is designed to show the local demo catalog. Product imagery is remote and falls back to a neutral clothing icon if unavailable.
+If platform scaffolding is missing, create the required platform folders using the appropriate Flutter setup command before running the app. Avoid regenerating existing project files unnecessarily.
 
-## Project structure
+### Run the Dart fundamentals demonstration
 
-```text
-lib/
-  main.dart              App theme, named routes, responsive screens and reusable UI
-  src/product.dart       Product/cart/order models and labelled local catalog
-  src/catalog.dart       DummyJSON client, JSON parsing and category aggregation
-  src/shop_state.dart         Shared cart, wishlist and catalog loading state
-  src/product_filters.dart    Search and Style Picks rules
-  src/checkout_validation.dart Reusable checkout field validators
-test/
-  style_hub_test.dart    Model, API parsing, cart, wishlist and fallback tests
-  product_filters_test.dart Search, Style Picks and checkout validation tests
-  widgets_test.dart      Empty-state widget test
-tool/
-  dart_basics.dart       Executable Dart fundamentals demonstration
- docs/
-  screenshots/app/       Genuine app screenshots (to be captured after runtime is available)
-  screenshots/code/      Genuine code screenshots (to be captured after editor/runtime is available)
-```
-
-## Lab experiment mapping
-
-| Experiment | Style Hub evidence |
-| --- | --- |
-| 1. Dart and Flutter basics | `tool/dart_basics.dart` demonstrates typed values, functions, collections, a condition, loops, and cart arithmetic. |
-| 2. Widgets and layouts | `lib/main.dart`: Text, Image, Container, Icon, Row, Column, Stack, product cards and detail layouts. |
-| 3. Responsive UI | `LayoutBuilder`, `SliverLayoutBuilder`, responsive product grid, and detail layout in `lib/main.dart`. |
-| 4. Navigation | Named route dispatch in `StyleHubApp`; routes for home, product, wishlist, cart, checkout and order. |
-| 5. State management | `ShopState` uses ChangeNotifier; `main` provides it; local search/filter/theme interactions use `setState`. |
-| 6. Custom widgets and themes | `ProductCard`, `ProductImage`, `OrderTotals`, `EmptyState`, `SectionHeading`, `StylePicks`, and Material 3 light/dark themes in `lib/main.dart`. |
-| 7. Forms and validation | `CheckoutScreen` uses Form and TextFormField validators for name, email, address and postal code. |
-| 8. Animations | `AnimatedSwitcher` fades the product count as search/filter results change; the explore action uses an eased scroll animation. |
-| 9. REST API | `lib/src/catalog.dart` fetches fashion category endpoints and `Product.fromJson` parses results. Loading, fallback and error presentation are in `lib/main.dart`. |
-| 10. Testing and debugging | `test/` covers parsing, API failure, cart totals, wishlist, search, checkout validation, fallback and an empty-state widget. Runtime verification remains pending because the installed Flutter/Dart CLI currently fails to launch reliably in this environment. |
-
-## Dart demonstration
-
-Run the small standalone example with:
-
-```powershell
+```bash
 dart run tool/dart_basics.dart
 ```
 
-Expected output includes the product name, unit price, quantity, calculated subtotal and two visible cart rows.
+This example demonstrates Dart variables, collections, functions, conditions, loops, and cart arithmetic.
 
-## Verification log
+## 6. Project Structure
 
-- Flutter/Dart SDK detected at `C:\src\flutter`; Dart SDK identifies itself as 3.13.4.
-- The DummyJSON product category endpoints were queried directly on 24 October 2026. All eight fashion category requests succeeded; the result counts ranged from 3 to 5 products each.
-- `flutter create` and `flutter --version` did not return output within the command window. Direct `dart format` fails inside DartDev with `Platform.resolvedExecutable` null; the Flutter tool snapshot reports an incompatible/empty `resolved_executable_name` VM flag. Consequently `dart format`, `dart run`, `flutter analyze`, `flutter test`, runtime checks, and genuine screenshots have not yet been verified.
-- `flutter test` and `flutter analyze` were each started and stopped after 20 seconds without output. `dart run tool/dart_basics.dart` also produced no output within 10 seconds and was interrupted. These are blocked attempts, not passing results.
-- The report content is in `docs/PROJECT_REPORT_DRAFT.md`. A DOCX was not produced because the configured DOCX renderer cannot find LibreOffice; its rendering gate cannot be completed.
-- The report content is in docs/PROJECT_REPORT_DRAFT.md. A DOCX was not produced because the configured DOCX renderer cannot find LibreOffice; its rendering gate cannot be completed.
+```text
+lib/
+  main.dart
+  src/
+    product.dart
+    catalog.dart
+    shop_state.dart
+    product_filters.dart
+    checkout_validation.dart
 
-## Screenshots and evidence
+test/
+  style_hub_test.dart
+  product_filters_test.dart
+  widgets_test.dart
+  catalog_test.dart
+  shop_state_test.dart
+  wishlist_test.dart
 
-No application screenshots have been added yet. Capture genuine screens from the running app into `docs/screenshots/app/` (home, search/filter, detail, wishlist, cart quantities/totals, checkout errors and simulated confirmation) and update this README with working image links once the Flutter runtime is available.
+tool/
+  dart_basics.dart
 
-## References
+docs/
+  PROJECT_REPORT_DRAFT.md
+  screenshots/
+    app/
+    code/
+```
 
-- ACE Engineering College, *CS506PC: UI Design-Flutter* course plan, 2026.
-- ACE Engineering College, *UI Design – Flutter Lab Manual*, 2026.
-- ACE Engineering College, *One-Week Technical Project Report* template, supplied for the project.
-- DummyJSON, [Products API documentation](https://dummyjson.com/docs/products), accessed 24 October 2026.
-- Flutter, [official documentation](https://docs.flutter.dev/).
+- `main.dart` contains the application entry point, screens, navigation, themes, responsive layouts, and reusable widgets.
+- `product.dart` defines product and cart-related models and the local demonstration catalog.
+- `catalog.dart` handles REST requests, JSON parsing, and category aggregation.
+- `shop_state.dart` manages catalog loading, cart operations, and wishlist state.
+- `product_filters.dart` contains search and Style Picks filtering logic.
+- `checkout_validation.dart` contains reusable checkout validation rules.
+- `test/` contains automated tests for application behavior and UI elements.
+- `tool/dart_basics.dart` demonstrates core Dart language concepts.
 
-## Current limitations
+## 7. Mapping to the UI Design Lab Experiments
 
-The project source and tests are in place, but local Flutter tooling is not currently launching, so the app has not been analyzed, tested, built, or run. Platform scaffolding, screenshots, visual responsive checks, Flutter analysis and tests depend on restoring or using a working Flutter SDK. The report remains a Markdown draft until a DOCX renderer is available. The user-provided Style Hub `origin` URL is configured. The push attempt failed before authentication because the Git credential helper could not start in this environment; no commits have been pushed. An authenticated GitHub connection or a working local credential helper is still needed.
+| Experiment | Implementation in Style Hub |
+|---|---|
+| 1. Dart and Flutter basics | `tool/dart_basics.dart` demonstrates typed values, functions, collections, conditions, loops, and cart arithmetic. |
+| 2. Widgets and layouts | `main.dart` uses Text, Image, Container, Icon, Row, Column, Stack, product cards, and detail layouts. |
+| 3. Responsive UI | LayoutBuilder, SliverLayoutBuilder, responsive product grids, and adaptive detail layouts. |
+| 4. Navigation | Named routes connect home, product details, wishlist, cart, checkout, and order screens. |
+| 5. State management | ChangeNotifier and Provider manage shared state; setState handles local interface interactions. |
+| 6. Custom widgets and themes | Reusable product cards, product images, order totals, empty states, section headings, Style Picks, and Material 3 themes. |
+| 7. Forms and validation | Checkout form validates name, email, address, and postal code fields. |
+| 8. Animations | AnimatedSwitcher and eased scrolling provide interface transitions. |
+| 9. REST API | `catalog.dart` retrieves product categories, parses JSON, and supports catalog failure handling. |
+| 10. Testing and debugging | Automated tests cover catalog loading, cart calculations, wishlist operations, filters, validation, and widget behavior. |
+
+## 8. Automated Testing
+
+Run the complete test suite:
+
+```bash
+flutter test
+```
+
+Run a specific test file:
+
+```bash
+flutter test test/catalog_test.dart
+flutter test test/shop_state_test.dart
+flutter test test/wishlist_test.dart
+```
+
+Run static analysis:
+
+```bash
+flutter analyze
+```
+
+### Test results observed during development
+
+- The existing Flutter test suite previously passed with **11 tests**.
+- Catalog repository tests passed: **2 tests**.
+- Cart state tests passed: **5 tests**.
+- Wishlist tests have been added; their result should be confirmed by running the wishlist test command.
+- Static analysis previously reported **13 informational lint suggestions**, with no errors reported in that run.
+
+The results above refer to separate runs at different points in development. Run `flutter test` again after all changes to verify the complete current test suite.
+
+## 9. Verification Status and Known Limitations
+
+The following have been verified during the development session:
+
+- Flutter dependency resolution completed successfully.
+- The existing test suite passed with 11 tests at an earlier stage.
+- The catalog repository tests passed.
+- The cart state tests passed.
+- Static analysis completed and reported informational lint suggestions rather than errors.
+
+The full test suite should be rerun after the newest tests are added. Runtime appearance, responsive behavior on different screen sizes, platform builds, and genuine application screenshots should also be checked before submission.
+
+Other limitations:
+
+- Checkout is simulated; no payment is processed.
+- The application does not provide account authentication or backend persistence.
+- Product information comes from sample API data.
+- Currency is unspecified by the API.
+- A project report draft is available at `docs/PROJECT_REPORT_DRAFT.md`. Confirm the required college report format and generate the final document before submission.
+- Capture genuine screenshots from the running application and place them in `docs/screenshots/app/`. Add code screenshots to `docs/screenshots/code/` if required by the lab instructions. Do not use mock images as evidence of actual application execution.
+
+## 10. Screenshots and Evidence
+
+Add screenshots of the actual running application after launching it successfully:
+
+1. Home screen and product grid.
+2. Search and category filtering.
+3. Product details.
+4. Wishlist.
+5. Cart with quantity and total calculations.
+6. Checkout validation errors.
+7. Simulated order confirmation.
+8. Responsive layout at different window widths.
+9. Relevant source-code sections for the lab experiments.
+
+Insert the screenshots into this README using relative Markdown image links once the image files exist. Ensure every screenshot represents the actual application.
+
+## 11. References
+
+- ACE Engineering College, *CS506PC: UI Design–Flutter* course plan, 2026.
+- ACE Engineering College, *UI Design–Flutter Lab Manual*, 2026.
+- ACE Engineering College, *One-Week Technical Project Report* template.
+- [DummyJSON Products API documentation](https://dummyjson.com/docs/products).
+- [Official Flutter documentation](https://docs.flutter.dev/).
+
+---
+
+**Project status:** Core shopping features and automated tests are implemented. Continue validating the complete test suite, run the application on a supported device or browser, capture genuine screenshots, and finalize the college report before submission.
