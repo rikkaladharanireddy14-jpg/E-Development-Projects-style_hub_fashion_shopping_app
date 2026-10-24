@@ -1,0 +1,14 @@
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+/build/
+/coverage/
+/android/.gradle/
+/ios/Pods/
+/ios/.symlinks/
+/linux/flutter/ephemeral/
+/macos/Flutter/GeneratedPluginRegistrant.swift
+/windows/flutter/ephemeral/
+.DS_Store
+*.log
