@@ -14,6 +14,7 @@ class CatalogException implements Exception {
 class CatalogRepository {
   CatalogRepository({http.Client? client}) : _client = client ?? http.Client();
   final http.Client _client;
+  void close() => _client.close();
   static final _base = Uri.parse('https://dummyjson.com/products/category/');
   static const fashionCategories = [
     'tops', 'mens-shirts', 'mens-shoes', 'womens-dresses', 'womens-shoes',

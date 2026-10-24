@@ -67,6 +67,12 @@ class ShopState extends ChangeNotifier {
     notifyListeners();
   }
 
+  @override
+  void dispose() {
+    _repository.close();
+    super.dispose();
+  }
+
   void clearCart() {
     _cart.clear();
     notifyListeners();

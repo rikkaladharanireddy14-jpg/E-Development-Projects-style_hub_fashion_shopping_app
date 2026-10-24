@@ -349,7 +349,7 @@ class StylePicks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final picks = stylePicks(products);
-    return Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: .45), borderRadius: BorderRadius.circular(20)), child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [Icon(Icons.auto_awesome_outlined, color: Theme.of(context).colorScheme.primary), const SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text('STYLE PICKS', style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: 1.2)), const SizedBox(height: 5), const Text('A simple edit based on the lowest listed prices in this collection.'), const SizedBox(height: 12), Text(picks.take(3).map((p) => '${p.name} · ${price(p.price)}').join('\n'), style: Theme.of(context).textTheme.bodySmall?.copyWith(height: 1.7))]))]));
+    return Container(padding: const EdgeInsets.all(20), decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer.withValues(alpha: .45), borderRadius: BorderRadius.circular(20)), child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [Icon(Icons.auto_awesome_outlined, color: Theme.of(context).colorScheme.primary), const SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [const Text('STYLE PICKS', style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: 1.2)), const SizedBox(height: 5), const Text('Lowest listed prices first. The sample API does not specify a currency.'), const SizedBox(height: 12), Text(picks.take(3).map((p) => '${p.name} · ${price(p.price)}').join('\n'), style: Theme.of(context).textTheme.bodySmall?.copyWith(height: 1.7))]))]));
   }
 }
 
@@ -368,5 +368,5 @@ class EmptyState extends StatelessWidget {
   Widget build(BuildContext context) => Center(child: Padding(padding: const EdgeInsets.all(28), child: Column(mainAxisSize: MainAxisSize.min, children: [Icon(Icons.checkroom_outlined, size: 48, color: Theme.of(context).colorScheme.primary), const SizedBox(height: 16), Text(title, textAlign: TextAlign.center, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700)), const SizedBox(height: 8), Text(message, textAlign: TextAlign.center)])));
 }
 
-String price(double amount) => '$' + amount.toStringAsFixed(2);
+String price(double amount) => amount.toStringAsFixed(2);
 String pretty(String value) => value.replaceAll('-', ' ').split(' ').map((word) => word.isEmpty ? word : '${word[0].toUpperCase()}${word.substring(1)}').join(' ');
