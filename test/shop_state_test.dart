@@ -63,4 +63,15 @@ void main() {
     expect(shop.items, isEmpty);
     expect(shop.total, 0.0);
   });
+
+  test('clearing the cart removes all items and resets totals', () {
+    shop.addToCart(product);
+    shop.addToCart(product);
+
+    shop.clearCart();
+
+    expect(shop.items, isEmpty);
+    expect(shop.itemCount, 0);
+    expect(shop.total, 0.0);
+  });
 }
