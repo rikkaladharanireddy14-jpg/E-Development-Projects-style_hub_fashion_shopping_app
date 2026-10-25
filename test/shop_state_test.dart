@@ -74,4 +74,15 @@ void main() {
     expect(shop.itemCount, 0);
     expect(shop.total, 0.0);
   });
+
+  test('updating a missing product leaves the cart unchanged', () {
+    shop.addToCart(product);
+
+    shop.updateQuantity('missing-product', 5);
+
+    expect(shop.items, hasLength(1));
+    expect(shop.items.single.product.id, product.id);
+    expect(shop.items.single.quantity, 1);
+    expect(shop.total, 25.0);
+  });
 }
