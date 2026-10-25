@@ -94,4 +94,37 @@ void main() {
       repository.close();
     }
   });
+
+  test('catalog removes duplicate product IDs across categories', () async {
+    final client = MockClient((request) async {
+      return http.Response(
+        jsonEncode({
+          'products': [
+            {
+              'id': 404,
+              'title': 'Everyday Shirt',
+              'description': 'A versatile everyday shirt.',
+              'category': 'tops',
+              'price': 24.99,
+              'thumbnail': '',
+              'images': [],
+            },
+          ],
+        }),
+        200,
+      );
+    });
+
+    final repository = CatalogRepository(client: client);
+
+    try {
+      final products = await repository.fetchProducts();
+
+      expect(products, hasLength(1));
+      expect(products.single.id, '404');
+      expect(products.single.name, 'Everyday Shirt');
+    } finally {
+      repository.close();
+    }
+  });
 }
