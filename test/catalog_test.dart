@@ -32,7 +32,10 @@ void main() {
       final products = await repository.fetchProducts();
 
       expect(products, isNotEmpty);
-      expect(products.any((product) => product.name == 'Classic Shirt'), isTrue);
+      expect(
+        products.any((product) => product.name == 'Classic Shirt'),
+        isTrue,
+      );
     } finally {
       repository.close();
     }
@@ -50,6 +53,43 @@ void main() {
         repository.fetchProducts(),
         throwsA(isA<CatalogException>()),
       );
+    } finally {
+      repository.close();
+    }
+  });
+
+  test('catalog keeps successful products when another category fails',
+      () async {
+    final client = MockClient((request) async {
+      if (request.url.pathSegments.last == 'tops') {
+        return http.Response(
+          jsonEncode({
+            'products': [
+              {
+                'id': 202,
+                'title': 'Summer Top',
+                'description': 'A lightweight summer top.',
+                'category': 'tops',
+                'price': 19.99,
+                'thumbnail': '',
+                'images': [],
+              },
+            ],
+          }),
+          200,
+        );
+      }
+
+      return http.Response('Temporary server error', 500);
+    });
+
+    final repository = CatalogRepository(client: client);
+
+    try {
+      final products = await repository.fetchProducts();
+
+      expect(products, hasLength(1));
+      expect(products.single.name, 'Summer Top');
     } finally {
       repository.close();
     }
