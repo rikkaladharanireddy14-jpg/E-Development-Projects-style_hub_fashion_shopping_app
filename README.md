@@ -225,3 +225,11 @@ Insert the screenshots into this README using relative Markdown image links once
 ---
 
 **Project status:** Core shopping features and automated tests are implemented. Continue validating the complete test suite, run the application on a supported device or browser, capture genuine screenshots, and finalize the college report before submission.
+
+## Application Screenshots
+
+### 1. Style Hub Home Page — Desktop View
+
+The desktop view demonstrates the main shopping interface, including the fashion hero banner, product search, category filters, and navigation.
+
+![Style Hub Home Page - Desktop](docs/screenshots/app/01-home-desktop.png)
