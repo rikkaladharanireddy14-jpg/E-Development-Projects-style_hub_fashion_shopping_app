@@ -231,5 +231,10 @@ Insert the screenshots into this README using relative Markdown image links once
 ### 1. Style Hub Home Page — Desktop View
 
 The desktop view demonstrates the main shopping interface, including the fashion hero banner, product search, category filters, and navigation.
-
 ![Style Hub Home Page - Desktop](docs/screenshots/app/01-home-desktop.png)
+
+### 2. Style Hub Home Page — Mobile View
+
+The mobile view demonstrates the responsive shopping interface on a phone-sized screen, including product browsing and bottom navigation.
+
+![Style Hub Home Page - Mobile](docs/screenshots/app/01-home-mobile.png)
