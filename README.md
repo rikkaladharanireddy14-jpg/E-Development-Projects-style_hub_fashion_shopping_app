@@ -63,6 +63,68 @@ The API supplies numeric prices without a currency field, so the interface uses 
 
 Reference: [DummyJSON Products API](https://dummyjson.com/docs/products).
 
+🏗️ System Architecture
+
+The StyleHub application follows a layered architecture where the Flutter frontend communicates with REST APIs to retrieve and display product information.
+
+              USER
+                |
+                v
+         FLUTTER UI LAYER
+                |
+       ---------------------
+       |         |         |
+      HOME     SEARCH     CART
+       |         |         |
+       ---------------------
+                |
+                v
+        STATE MANAGEMENT
+             (Provider)
+                |
+                v
+         API SERVICE LAYER
+                |
+                v
+           REST API
+          (DummyJSON)
+                |
+                v
+          JSON RESPONSE
+                |
+                v
+          PRODUCT MODEL
+                |
+                v
+        FLUTTER UI DISPLAY
+
+Architecture Components
+
+- Presentation Layer: Displays products and provides user interaction.
+- State Management: Manages application states using Provider.
+- API Service Layer: Handles REST API requests.
+- Data Layer: Processes JSON responses and product information.
+- UI Display: Shows the retrieved product information to users.
+
+
+## Step 4: Save your changes
+1. Scroll down.
+2. Click **Commit changes**.
+3. Add a commit message:
+
+`Updated README with system architecture`
+
+4. Select **Commit directly to the main branch** (if that's your working branch).
+5. Click **Commit changes** again.
+
+## Step 5: Verify
+Go back to your repository and open README.md.
+
+Your new System Architecture section should appear below your existing content.
+
+---
+
+**My suggestion:** Don't delete your existing README content. Just add the new sections below it so your project documentation becomes more complete and professional.
 ## 5. Installation and Setup
 
 ### Prerequisites
